@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView,View
 from django.http import HttpResponse
 from models import Point
-
+from django.core import serializers
 # Create your views here.
 
 class MapPoints(ListView):
@@ -26,4 +26,4 @@ class Test(View):
 
 
     def get(self, request, *args, **kwargs):
-        return HttpResponse(Point.objects.all())
+        return HttpResponse(serializers.serialize('json',Point.objects.all()))

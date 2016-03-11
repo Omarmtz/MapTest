@@ -21,6 +21,26 @@
     // Each marker is labeled with the name of the place
     $(function(){
 
+        function loadList()
+        {
+            $.get("test",
+                function(data,status)
+                {
+                    var objects = JSON.parse(data);
+                    var qList = $("#point_list");
+                    qList.empty();
+
+                    for (var i = 0; i < objects.length; i++) {
+                        var tmp = objects[i].fields;
+                        var li = $('<li/>')
+                        .text(tmp.address + ' Lat:'+tmp.lat + 'Lng:'+ tmp.lng )
+                        .appendTo(qList);
+                    }
+                }
+            );
+        }
+
+        loadList();
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie != '') {
@@ -96,6 +116,8 @@
                             console.log("Data: " + data + "\nStatus: " + status);
                         });
 
+                        loadList();
+
 
                     } else {
                         window.alert('Invalid Address');
@@ -116,6 +138,10 @@
 </head>
 <body>
     <div id="map"></div>
-    
+    <div>
+        <ul id="point_list">
+
+        </ul>
+    </div>
 </body>
 </html>
